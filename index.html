@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,26 +9,56 @@
     <link rel="manifest" href="manifest.json">
     <title>Lista de la Compra</title>
 </head>
-<body>
-    <h1>Lista de la Compra</h1>
-    <input type="text" id="producto" placeholder="Producto" required>
-    <input type="number" id="precio" placeholder="Precio (€)" required>
-    <button onclick="agregarProducto()">Añadir</button>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Producto</th>
-                <th>Precio (€)</th>
-            </tr>
-        </thead>
-        <tbody id="listaProductos"></tbody>
-    </table>
-    
-    <h3>Total: <span id="total">0</span> €</h3>
+<body>
+    <main class="container">
+        <h1>Lista de la Compra</h1>
+        <input type="text" id="producto" placeholder="Producto" required>
+        <input type="number" id="precio" placeholder="Precio (€)" required>
+        <button onclick="agregarProducto()">Añadir</button>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Precio (€)</th>
+                </tr>
+            </thead>
+            <tbody id="listaProductos"></tbody>
+        </table>
+
+        <h3>Total: <span id="total">0</span> €</h3>
+
+        <!-- Botón para abrir el formulario de contacto -->
+        <div class="boton-container">
+            <button class="btn_sugerencias" onclick="mostrarFormulario()">Sugerencias</button>
+        </div>
+    </main>
+
+    <!-- Formulario de contacto oculto -->
+    <div id="formularioContacto" style="display: none;">
+        <h2>Déjame tu sugerencia</h2>
+        <p>¡Me encantaría saber qué opinas sobre la app! Déjame tus sugerencias y mejoras.</p>
+        <form id="contactForm">
+            <div>
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" placeholder="Tu nombre" required>
+            </div>
+            <div>
+                <label for="mensaje">Tu sugerencia:</label>
+                <textarea id="mensaje" rows="5" placeholder="Escribe tu sugerencia o comentario aquí..."
+                    required></textarea>
+            </div>
+            <div class="boton-container">
+                <button class="btn_enviar_formulario" type="button" onclick="enviarPorWhatsApp()">Enviar
+                    sugerencia</button>
+            </div>
+        </form>
+    </div>
 
     <script src="app.js"></script>
 </body>
+
 </html>
 
 <script>
@@ -35,5 +66,33 @@
         navigator.serviceWorker.register('sw.js')
             .then(() => console.log('Service Worker registrado'))
             .catch(err => console.error('Error al registrar el Service Worker', err));
+    }
+    // Función para mostrar el formulario de contacto
+    function mostrarFormulario() {
+        document.getElementById('formularioContacto').style.display = 'block';
+    }
+
+    // Función para enviar el mensaje por WhatsApp
+    function enviarPorWhatsApp() {
+        const nombre = document.getElementById('nombre').value;
+        const mensaje = document.getElementById('mensaje').value;
+
+        if (nombre && email && mensaje) {
+            // Codificar el mensaje para URL
+            const texto = `¡Hola! Soy ${nombre}. Aquí están algunas ideas y sugerencias para mejorar la app: ${mensaje}`;
+            const telefono = "34608530263";
+
+            // Crear el enlace a WhatsApp con el mensaje predefinido
+            const urlWhatsApp = `https://wa.me/${telefono}?text=${encodeURIComponent(texto)}`;
+
+            // Abrir WhatsApp en el navegador o app
+            window.open(urlWhatsApp, '_blank');
+
+            // Limpiar el formulario
+            document.getElementById('contactForm').reset();
+            document.getElementById('formularioContacto').style.display = 'none';
+        } else {
+            alert('Por favor, completa todos los campos.');
+        }
     }
 </script>

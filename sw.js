@@ -1,4 +1,4 @@
-const CACHE_NAME = 'v1.0.0'; // Versión APP
+const CACHE_NAME = 'v1.0.1'; // Versión APP
 
 const URLsToCache = [
     './',
