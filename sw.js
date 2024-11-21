@@ -1,8 +1,9 @@
-const CACHE_NAME = 'v1.0.1'; // Versión APP
+const CACHE_NAME = 'v1.0.2'; // Versión APP
 
 const URLsToCache = [
     './',
     './index.html',
+    './styles.css',
     './app.js',
     './manifest.json',
     './icon.png'
